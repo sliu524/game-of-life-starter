@@ -27,5 +27,7 @@ Go to your extensions and search for "Processing" and look for the extension tha
 
 <img src="image.png" alt="Description" height="50">
 
+### Cloning
+After cloning this repo, make a change and then a commit. When you go to push (sync) your commit, you will be prompted to "fork" the repo. You can't make changes to my repo, so say "yes" to create a fork, which will be your own copy.
 
 ### Good luck!
