@@ -9,9 +9,20 @@ void setup() {
   noStroke(); // don't draw the edges of each cell
   frameRate(10); // controls speed of regeneration
   grid = new int[height / SPACING][width / SPACING];
+  int row = grid.length;
+  int col = grid[0].length;
 
   // STEP 1 - Populate initial grid (you may want to use Arrays.toString to check it)
-  
+  for (int i = 0; i < row; i ++){
+    for (int j = 0; j < col; j++){
+      int aliveOrDead = (int)(Math.random()*10)+1;
+      //Density random
+      if (aliveOrDead <= 10 * DENSITY){
+        grid[i][j] = 1;
+      }
+    }
+    
+  }
 
 }
 
@@ -24,15 +35,66 @@ int[][] calcNextGrid() {
   int[][] nextGrid = new int[grid.length][grid[0].length];
 
   // your code here
-
+  if (grid[r][c] == 1){
+    if (n <= 1){
+      grid
+    }
+  }
   return nextGrid;
 }
 
-int countNeighbors(int y, int x) {
+int countNeighbors(int r, int c, int rows, int cols) {
   int n = 0; // don't count yourself!
-  
-  // your code here
-  // don't check out-of-bounds cells!
+  int left = 0;
+  int right = 0;
+  int top = 0;
+  int bottom = 0;
+  int topLeft = 0;
+  int topRight = 0;
+  int bottomLeft = 0;
+  int bottomRight = 0;
+  if (r - 1 > -1){
+    if (grid[r-1][c] == 1){
+      top = 1;
+    }
+  }
+  if (r + 1 < rows){
+    if (grid[r+1][c] == 1){
+      bottom = 1;
+    }
+  }
+  if (c - 1 > -1){
+    if (grid[r][c-1] == 1){
+      left = 1;
+    }
+  }
+  if (c + 1 < cols){
+    if (grid[r][c+1] == 1){
+      left = 1;
+    }
+  }
+  if ((r - 1 > -1)&&(c - 1 > -1)){
+    if (grid[r-1][c-1] == 1){
+      topLeft = 1;
+    }
+  }
+  if ((r - 1 > -1)&&(c + 1 > cols)){
+    if (grid[r-1][c+1] == 1){
+      topRight = 1;
+    }
+  }
+  if ((r + 1 < rows)&&(c - 1 > -1)){
+    if (grid[r+1][c-1] == 1){
+      bottomLeft = 1;
+    }
+  }
+  if ((r + 1 < rows)&&(c + 1 > cols)){
+    if (grid[r+1][c+1] == 1){
+      bottomRight = 1;
+    }
+  }
+  n = left + right + top + bottom + topLeft + topRight + bottomLeft + bottomRight;
+
 
   return n;
 }
@@ -40,8 +102,18 @@ int countNeighbors(int y, int x) {
 void showGrid() {
   // your code here
   // use square() to represent each cell
-  for (int i = 0; i < height; i += SPACING){
-
+  for (int y = 0; y < height; y += SPACING){
+    for (int x = 0; x < width; x += SPACING){
+      square(x, y, SPACING);
+      int row = y / SPACING;
+      int col = x / SPACING;
+      if (grid[row][col] == 1){
+        fill(0, 255, 0);
+      }
+      else{
+        fill(0, 0, 0);
+      }
+    }
   }
   // use fill(r, g, b) to control color: black for empty, red for filled (or alive)
   // each square (cell) has a width and height of SPACING. 
