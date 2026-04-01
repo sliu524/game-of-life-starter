@@ -7,7 +7,7 @@ int[][] grid; // the 2D array to hold 0's and 1's
 void setup() {
   size(800, 600); // adjust accordingly, make sure it's a multiple of SPACING
   noStroke(); // don't draw the edges of each cell
-  frameRate(10); // controls speed of regeneration
+  frameRate(1); // controls speed of regeneration
   grid = new int[height / SPACING][width / SPACING];
   int row = grid.length;
   int col = grid[0].length;
@@ -28,22 +28,35 @@ void setup() {
 
 void draw() {
   showGrid(); // STEP 2 - Implement this method so you can see your 2D array
-  // grid = calcNextGrid(); // uncomment this after you get showGrid() working
+  grid = calcNextGrid(); // uncomment this after you get showGrid() working
 }
 
 int[][] calcNextGrid() {
   int[][] nextGrid = new int[grid.length][grid[0].length];
 
   // your code here
-  if (grid[r][c] == 1){
-    if (n <= 1){
-      grid
+  int rows = grid.length;
+  int cols = grid[0].length;
+  int n = 0;
+  for (int y = 0; y < rows; y++){
+    for (int x = 0; x < cols; x++){
+      n = countNeighbors(y, x, rows, cols);
+      if (grid[y][x] == 1){
+        if ((n <= 1)||(n >= 4)){
+          grid[y][x] = 0;
+        }
+      }
+      else{
+        if (n == 3){
+          grid[y][x] = 1;
+        }
+      }
     }
   }
   return nextGrid;
 }
 
-int countNeighbors(int r, int c, int rows, int cols) {
+int countNeighbors(int y, int x, int rows, int cols) {
   int n = 0; // don't count yourself!
   int left = 0;
   int right = 0;
@@ -53,46 +66,51 @@ int countNeighbors(int r, int c, int rows, int cols) {
   int topRight = 0;
   int bottomLeft = 0;
   int bottomRight = 0;
-  if (r - 1 > -1){
-    if (grid[r-1][c] == 1){
+  //top
+  if (y > 0){
+    if (grid[x][y-1] == 1){
       top = 1;
     }
   }
-  if (r + 1 < rows){
-    if (grid[r+1][c] == 1){
+  //bottom
+  if (y < rows - 1){
+    if (grid[x][y+1] == 1){
       bottom = 1;
     }
   }
-  if (c - 1 > -1){
-    if (grid[r][c-1] == 1){
+  //three left cells
+  if (x > 0){
+    if (grid[x-1][y] == 1){
       left = 1;
     }
-  }
-  if (c + 1 < cols){
-    if (grid[r][c+1] == 1){
-      left = 1;
+    if (y > 0){
+      if (grid[x-1][y-1] == 1){
+        topLeft = 1;
+      }
+    }
+    if (y < rows - 1){
+      if (grid[x-1][y+1] == 1){
+        bottomLeft = 1;
+      }
     }
   }
-  if ((r - 1 > -1)&&(c - 1 > -1)){
-    if (grid[r-1][c-1] == 1){
-      topLeft = 1;
+  //three right cells
+  if (x < cols - 1){
+    if (grid[x+1][y] == 1){
+      right = 1;
+    }
+    if (y > 0){
+      if (grid[x+1][y-1] == 1){
+        topRight = 1;
+      }
+    }
+    if (y < rows - 1){
+      if (grid[x+1][y+1] == 1){
+        bottomRight = 1;
+      }
     }
   }
-  if ((r - 1 > -1)&&(c + 1 > cols)){
-    if (grid[r-1][c+1] == 1){
-      topRight = 1;
-    }
-  }
-  if ((r + 1 < rows)&&(c - 1 > -1)){
-    if (grid[r+1][c-1] == 1){
-      bottomLeft = 1;
-    }
-  }
-  if ((r + 1 < rows)&&(c + 1 > cols)){
-    if (grid[r+1][c+1] == 1){
-      bottomRight = 1;
-    }
-  }
+
   n = left + right + top + bottom + topLeft + topRight + bottomLeft + bottomRight;
 
 
