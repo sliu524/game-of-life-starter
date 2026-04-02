@@ -3,7 +3,7 @@ import java.util.Arrays;
 final int SPACING = 10; // each cell's width/height //<>// //<>//
 final float DENSITY = 0.1; // how likely each cell is to be alive at the start
 int[][] grid; // the 2D array to hold 0's and 1's
-
+boolean isPaused = false;
 void setup() {
   size(800, 600); // adjust accordingly, make sure it's a multiple of SPACING
   noStroke(); // don't draw the edges of each cell
@@ -29,6 +29,17 @@ void setup() {
 void draw() {
   showGrid(); // STEP 2 - Implement this method so you can see your 2D array
   grid = calcNextGrid(); // uncomment this after you get showGrid() working
+}
+//Space key pause/resume
+void keyPressed() {
+  if (!isPaused){
+    noLoop();
+    isPaused = true;
+  }
+  else{
+    loop();
+    isPaused = false;
+  }
 }
 
 int[][] calcNextGrid() {
