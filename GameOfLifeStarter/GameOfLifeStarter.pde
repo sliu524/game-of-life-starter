@@ -1,13 +1,13 @@
 import java.util.Arrays;
 
-final int SPACING = 20; // each cell's width/height //<>// //<>//
+final int SPACING = 10; // each cell's width/height //<>// //<>//
 final float DENSITY = 0.1; // how likely each cell is to be alive at the start
 int[][] grid; // the 2D array to hold 0's and 1's
 
 void setup() {
   size(800, 600); // adjust accordingly, make sure it's a multiple of SPACING
   noStroke(); // don't draw the edges of each cell
-  frameRate(1); // controls speed of regeneration
+  frameRate(10); // controls speed of regeneration
   grid = new int[height / SPACING][width / SPACING];
   int row = grid.length;
   int col = grid[0].length;
@@ -43,12 +43,18 @@ int[][] calcNextGrid() {
       n = countNeighbors(y, x, rows, cols);
       if (grid[y][x] == 1){
         if ((n <= 1)||(n >= 4)){
-          grid[y][x] = 0;
+          nextGrid[y][x] = 0;
+        }
+        else{
+          nextGrid[y][x] = 1;
         }
       }
       else{
         if (n == 3){
-          grid[y][x] = 1;
+          nextGrid[y][x] = 1;
+        }
+        else{
+          nextGrid[y][x] = 0;
         }
       }
     }
