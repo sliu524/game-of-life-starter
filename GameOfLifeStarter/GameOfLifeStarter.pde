@@ -68,44 +68,44 @@ int countNeighbors(int y, int x, int rows, int cols) {
   int bottomRight = 0;
   //top
   if (y > 0){
-    if (grid[x][y-1] == 1){
+    if (grid[y-1][x] == 1){
       top = 1;
     }
   }
   //bottom
   if (y < rows - 1){
-    if (grid[x][y+1] == 1){
+    if (grid[y+1][x] == 1){
       bottom = 1;
     }
   }
   //three left cells
   if (x > 0){
-    if (grid[x-1][y] == 1){
+    if (grid[y][x-1] == 1){
       left = 1;
     }
     if (y > 0){
-      if (grid[x-1][y-1] == 1){
+      if (grid[y-1][x-1] == 1){
         topLeft = 1;
       }
     }
     if (y < rows - 1){
-      if (grid[x-1][y+1] == 1){
+      if (grid[y+1][x-1] == 1){
         bottomLeft = 1;
       }
     }
   }
   //three right cells
   if (x < cols - 1){
-    if (grid[x+1][y] == 1){
+    if (grid[y][x+1] == 1){
       right = 1;
     }
     if (y > 0){
-      if (grid[x+1][y-1] == 1){
+      if (grid[y-1][x+1] == 1){
         topRight = 1;
       }
     }
     if (y < rows - 1){
-      if (grid[x+1][y+1] == 1){
+      if (grid[y+1][x+1] == 1){
         bottomRight = 1;
       }
     }
